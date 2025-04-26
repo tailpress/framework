@@ -1,4 +1,4 @@
-<p align="center"><a href="https://tailpress.io" target="_blank"><img src="https://tailpress.io/images/logo.svg?v=5" width="200" alt="TailPress"></a></p>
+<p align="center"><a href="https://tailpress.io" target="_blank"><img src="https://tailpress.io/images/logo.svg" width="200" alt="TailPress"></a></p>
 
 <p align="center">
 <a href="https://github.com/tailpress/framework/releases/"><img src="https://img.shields.io/github/release/tailpress/framework?include_prereleases=&sort=semver" alt="GitHub release"></a>
