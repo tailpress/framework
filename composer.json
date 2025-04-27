@@ -1,30 +1,28 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
-    "name": "tailpress/framework",
-    "description": "The framework package for TailPress.",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "TailPress\\Framework\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+  "$schema": "https://getcomposer.org/schema.json",
+  "name": "tailpress/framework",
+  "description": "The framework package for TailPress.",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "TailPress\\Framework\\": "src/"
     },
-    "bin": [
-        "bin/tailpress-cli"
-    ],
-    "authors": [
-        {
-            "name": "Jeffrey van Rossum",
-            "email": "jeffrey@vanrossum.dev"
-        }
-    ],
-    "require": {
-        "php": ">=8.0.2",
-        "symfony/console": "^6.0|^7.0"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.22"
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Jeffrey van Rossum",
+      "email": "jeffrey@vanrossum.dev"
     }
+  ],
+  "require": {
+    "php": ">=8.0.2",
+    "symfony/console": "^6.0|^7.0"
+  },
+  "require-dev": {
+    "tailpress/cli": "dev-main",
+    "laravel/pint": "^1.22"
+  }
 }

@@ -2,9 +2,11 @@
 
 namespace TailPress\Framework;
 
+use TailPress\Framework\Theme;
+
 abstract class ServiceProvider
 {
-    public function __construct(public $app)
+    public function __construct(public Theme $app)
     {
         //
     }

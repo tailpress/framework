@@ -30,8 +30,6 @@ class Theme
         $this->menuManager = new MenuManager;
         $this->assetManager = new AssetManager;
 
-        $this->commandManager->add(\TailPress\Framework\Commands\Inspire::class);
-
         $this->commandManager->discoverCommands();
         $this->themeSupportManager->register();
         $this->menuManager->register();
