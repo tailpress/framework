@@ -22,7 +22,7 @@
     "symfony/console": "^6.0|^7.0"
   },
   "require-dev": {
-    "tailpress/cli": "dev-main",
+    "tailpress/cli": "^5.0",
     "laravel/pint": "^1.22"
   }
 }
