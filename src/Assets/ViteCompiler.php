@@ -6,15 +6,35 @@ class ViteCompiler extends Compiler
 {
     public function __construct(
         public ?string $serverUrl = null,
-        public ?string $directory = null
+        public ?string $directory = null,
+        public bool $ssl = false,
+        public bool $sslVerify = true
     ) {
         $this->serverUrl = rtrim($serverUrl ?? 'http://localhost:3000', '/');
         $this->directory = $directory ? trailingslashit($directory) : get_template_directory();
     }
 
+    public function ssl(bool $verify = true): self
+    {
+        $this->ssl = true;
+        $this->sslVerify = $verify;
+
+        if (str_starts_with($this->serverUrl, 'http://')) {
+            $this->serverUrl = preg_replace('/^http:/', 'https:', $this->serverUrl);
+        }
+
+        return $this;
+    }
+
     public function isDevServerRunning(): bool
     {
-        $response = wp_remote_get($this->serverUrl.'/@vite/client');
+        $args = [];
+
+        if($this->ssl) {
+            $args['sslverify'] = $this->sslVerify;
+        }
+
+        $response = wp_remote_get($this->serverUrl.'/@vite/client', $args);
 
         return ! is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200;
     }
