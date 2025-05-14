@@ -65,13 +65,49 @@ class ViteCompiler extends Compiler
                 }
                 ?>
                 <script type="module">
-                    wp.domReady(() => {
-                        wp.data.subscribe(() => {
-                            const editorIframe = document.querySelector('iframe[name="editor-canvas"]');
-                            if (!editorIframe) return;
+                    const { select, subscribe } = wp.data;
 
-                            const doc = editorIframe.contentDocument || editorIframe.contentWindow.document;
-                            if (doc.querySelector('script[src$="/@vite/client"]')) return;
+                    function whenEditorIsReady() {
+                        return new Promise((resolve) => {
+                            const unsubscribe = subscribe(() => {
+                                if (select('core/editor').isCleanNewPost() || select('core/block-editor').getBlockCount() > 0) {
+                                    unsubscribe()
+                                    resolve()
+                                }
+                            })
+                        })
+                    }
+
+                    function whenEditorIframeIsReady() {
+                        const editorCanvasIframeElement = document.querySelector('[name="editor-canvas"]');
+
+                        return new Promise((resolve) => {
+                            if(!editorCanvasIframeElement.loading) {
+                                resolve(editorCanvasIframeElement);
+                            }
+
+                            editorCanvasIframeElement.onload = () => {
+                                resolve(editorCanvasIframeElement);
+                            };
+                        });
+                    }
+
+                    whenEditorIsReady().then(() => {
+                        const editorIframe = document.querySelector('iframe[name="editor-canvas"]');
+                        let docPromise;
+
+                        if (editorIframe) {
+                            console.info('[TailPress] Injecting Vite in editor iframe')
+                            docPromise = whenEditorIframeIsReady().then(() => editorIframe.contentDocument || editorIframe.contentWindow.document);
+                        } else {
+                            console.info('[TailPress] Injecting Vite in main document')
+                            docPromise = Promise.resolve(document);
+                        }
+
+                        docPromise.then((doc) => {
+                            if (doc.querySelector('script[src$="/@vite/client"]')) {
+                                return;
+                            }
 
                             const viteScript = doc.createElement('script');
                             viteScript.type = 'module';
