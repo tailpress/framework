@@ -28,6 +28,10 @@ class ViteCompiler extends Compiler
 
     public function isDevServerRunning(): bool
     {
+        if(! in_array(wp_get_environment_type(), ['local', 'development'])) {
+            return false;
+        }
+
         $args = [];
 
         if($this->ssl) {
